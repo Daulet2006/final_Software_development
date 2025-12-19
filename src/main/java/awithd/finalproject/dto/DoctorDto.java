@@ -13,12 +13,12 @@ import java.util.Set;
 @Builder
 public class DoctorDto {
     private Long id;
-    private String specializationDto;
-    private Integer yearsOfExperienceDto;
-
+    private String emailDto;
     private String firstNameDto;
     private String lastNameDto;
-    private String emailDto;
+
+    private String specializationDto;
+    private Integer yearsOfExperienceDto;
 
     private Set<Long> appointmentIds;
     private Set<Long> patientIds;
