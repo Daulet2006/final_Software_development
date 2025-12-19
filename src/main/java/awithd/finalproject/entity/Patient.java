@@ -22,7 +22,7 @@ public class Patient extends User {
 
     private String medicalCardNumber;
 
-    @OneToMany(mappedBy = "doctor")
+    @OneToMany(mappedBy = "patient")
     private Set<Appointment> appointments = new HashSet<>();
 
     @ManyToMany(mappedBy = "patients")
