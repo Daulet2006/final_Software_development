@@ -10,5 +10,5 @@ import lombok.*;
 public class PermissionDto {
 
     private Long id;
-    private String name;
+    private String nameDto;
 }
