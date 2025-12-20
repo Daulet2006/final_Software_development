@@ -21,7 +21,6 @@ public class AppointmentDto {
     private Long patientId;
 
     private LocalDateTime appointmentTimeDto;
-    @Enumerated(EnumType.STRING)
     private AppointmentStatus statusDto;
     private String reasonDto;
 }
