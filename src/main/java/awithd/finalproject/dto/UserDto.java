@@ -13,11 +13,11 @@ public class UserDto {
 
     private Long id;
 
-    private String email;
-    private String password;
+    private String emailDto;
+    private String passwordDto;
 
-    private String firstName;
-    private String lastName;
+    private String firstNameDto;
+    private String lastNameDto;
 
-    private Set<String> permissions;
+    private Set<PermissionDto> permissionsDto;
 }
