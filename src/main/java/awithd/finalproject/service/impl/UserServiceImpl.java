@@ -7,6 +7,7 @@ import awithd.finalproject.mapper.UserMapper;
 import awithd.finalproject.repository.PermissionRepository;
 import awithd.finalproject.repository.UserRepository;
 import awithd.finalproject.service.UserService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -34,6 +35,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void register(UserDto dto) {
 
         if (userRepository.existsByEmail(dto.getEmailDto())) {
