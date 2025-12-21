@@ -1,5 +1,7 @@
 package awithd.finalproject.config;
 
+import awithd.finalproject.service.UserService;
+import awithd.finalproject.service.impl.UserServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -25,18 +27,26 @@ public class SecurityConfig {
     }
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-        AuthenticationManagerBuilder authenticationManagerBuilder =
-                http.getSharedObject(AuthenticationManagerBuilder.class);
+//        AuthenticationManagerBuilder authenticationManagerBuilder =
+//                http.getSharedObject(AuthenticationManagerBuilder.class);
 
 //        authenticationManagerBuilder
-//                .userDetailsService(userService())
+//                .userDetailsService(UserService())
 //                .passwordEncoder(passwordEncoder());
 
         http.authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
-                .requestMatchers("/auth/**").permitAll()
+                .requestMatchers(
+                        "/api/auth/**",
+                        "/api/docs",
+                        "/api/swagger-ui/**",
+                        "/swagger-ui/**",
+                        "/v3/api-docs/**"
+                )
+                .permitAll()
                 .anyRequest().authenticated()
         );
         http.httpBasic(Customizer.withDefaults());
+//        http.httpBasic(httpBasic -> httpBasic.disable());
         http.csrf(csrf -> csrf.disable());
         return http.build();
     }
