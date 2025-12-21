@@ -8,6 +8,6 @@ public interface DoctorService {
     DoctorDto create(DoctorDto doctorDto);
     DoctorDto getById(Long id);
     List<DoctorDto> getAll();
-    DoctorDto update(DoctorDto doctorDto);
+    DoctorDto update(Long id, DoctorDto doctorDto);
     boolean delete(Long id);
 }
