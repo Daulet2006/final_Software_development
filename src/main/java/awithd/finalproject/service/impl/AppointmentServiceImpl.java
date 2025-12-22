@@ -2,7 +2,6 @@ package awithd.finalproject.service.impl;
 
 import awithd.finalproject.dto.AppointmentDto;
 import awithd.finalproject.entity.Appointment;
-import awithd.finalproject.entity.Doctor;
 import awithd.finalproject.mapper.AppointmentMapper;
 import awithd.finalproject.repository.AppointmentRepository;
 import awithd.finalproject.repository.DoctorRepository;
