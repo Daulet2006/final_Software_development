@@ -19,6 +19,6 @@ public class PatientDto {
     private String firstNameDto;
     private String lastNameDto;
 
-    private Set<Long> appointmentIds;
-    private Set<Long> doctorIds;
+    private Set<AppointmentDto> appointmentDtos;
+    private Set<DoctorDto> doctorDtos;
 }
