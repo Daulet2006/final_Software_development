@@ -20,6 +20,6 @@ public class DoctorDto {
     private String specializationDto;
     private Integer yearsOfExperienceDto;
 
-    private Set<AppointmentDto> appointmentDtoSet;
-    private Set<PatientDto> patientDtoSet;
+    private Set<AppointmentDto> appointmentDtos;
+    private Set<PatientDto> patientDtos;
 }

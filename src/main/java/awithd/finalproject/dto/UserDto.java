@@ -19,5 +19,4 @@ public class UserDto {
     private String firstNameDto;
     private String lastNameDto;
 
-    private Set<PermissionDto> permissionsDto;
 }
