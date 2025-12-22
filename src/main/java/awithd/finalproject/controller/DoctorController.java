@@ -5,12 +5,15 @@ import awithd.finalproject.service.DoctorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/doctors")
 @RequiredArgsConstructor
+@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 public class DoctorController {
+
     private final DoctorService doctorService;
 
     @PostMapping
@@ -29,7 +32,8 @@ public class DoctorController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody DoctorDto doctorDto) {
+    public ResponseEntity<?> update(@PathVariable Long id,
+                                    @RequestBody DoctorDto doctorDto) {
         return new ResponseEntity<>(doctorService.update(id, doctorDto), HttpStatus.OK);
     }
 
