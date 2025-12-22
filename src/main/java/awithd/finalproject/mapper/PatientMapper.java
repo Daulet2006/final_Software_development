@@ -23,8 +23,8 @@ public interface PatientMapper {
     @Mapping(target = "lastNameDto", source = "lastName")
     @Mapping(target = "medicalCardNumberDto", source = "medicalCardNumber")
 
-    @Mapping(target = "appointmentDtoSet", ignore = true)
-    @Mapping(target = "doctorsDtoSet", ignore = true)
+    @Mapping(target = "appointmentDtos", ignore = true)
+    @Mapping(target = "doctorDtos", ignore = true)
     PatientDto toDto(Patient patient);
 
     List<PatientDto> toDtoList(List<Patient> patientDtoList);
