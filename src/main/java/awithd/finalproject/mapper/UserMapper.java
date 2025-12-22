@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
 
-@Mapper(componentModel = "spring",uses = {PermissionMapper.class})
+@Mapper(componentModel = "spring")
 public interface UserMapper {
 
     @Mappings({
@@ -14,7 +14,7 @@ public interface UserMapper {
             @Mapping(target = "password", source = "passwordDto"),
             @Mapping(target = "firstName", source = "firstNameDto"),
             @Mapping(target = "lastName", source = "lastNameDto"),
-            @Mapping(target = "permissions", source = "permissionsDto")
+            @Mapping(target = "permissions", ignore = true)
     })
     User toEntity(UserDto dto);
 
@@ -22,8 +22,7 @@ public interface UserMapper {
             @Mapping(target = "emailDto", source = "email"),
             @Mapping(target = "passwordDto", ignore = true),
             @Mapping(target = "firstNameDto", source = "firstName"),
-            @Mapping(target = "lastNameDto", source = "lastName"),
-            @Mapping(target = "permissionsDto", source = "permissions")
+            @Mapping(target = "lastNameDto", source = "lastName")
     })
     UserDto toDto(User user);
 }
