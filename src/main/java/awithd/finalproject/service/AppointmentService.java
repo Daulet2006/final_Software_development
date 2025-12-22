@@ -1,7 +1,6 @@
 package awithd.finalproject.service;
 
 import awithd.finalproject.dto.AppointmentDto;
-import awithd.finalproject.dto.DoctorDto;
 
 import java.util.List;
 
