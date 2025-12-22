@@ -26,8 +26,8 @@ public interface DoctorMapper {
     @Mapping(target = "specializationDto", source = "specialization")
     @Mapping(target = "yearsOfExperienceDto", source = "yearsOfExperience")
 
-    @Mapping(target = "appointmentDtoSet", ignore = true)
-    @Mapping(target = "patientDtoSet", ignore = true)
+    @Mapping(target = "appointmentDtos", ignore = true)
+    @Mapping(target = "patientDtos", ignore = true)
     DoctorDto toDto(Doctor doctor);
 
     List<DoctorDto> toDtoList(List<Doctor> doctorList);
