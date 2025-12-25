@@ -1,9 +1,7 @@
 package awithd.finalproject.controller;
 
 import awithd.finalproject.dto.AppointmentDto;
-import awithd.finalproject.dto.PatientDto;
 import awithd.finalproject.service.AppointmentService;
-import awithd.finalproject.service.PatientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,37 +13,36 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class AppointmentController {
 
-    private final AppointmentService appointmentService;
+    private final AppointmentService service;
 
-    @PreAuthorize("hasAnyAuthority('ROLE_USER','ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_PATIENT')")
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody AppointmentDto appointmentDto) {
-        return new ResponseEntity<>(appointmentService.create(appointmentDto), HttpStatus.OK);
+    public ResponseEntity<?> create(@RequestBody AppointmentDto dto) {
+        return new ResponseEntity<>(service.create(dto), HttpStatus.OK);
     }
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping
     public ResponseEntity<?> getAll() {
-        return new ResponseEntity<>(appointmentService.getAll(), HttpStatus.OK);
+        return new ResponseEntity<>(service.getAll(), HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAnyAuthority('ROLE_USER','ROLE_ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ROLE_DOCTOR','ROLE_PATIENT','ROLE_ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable Long id) {
-        return new ResponseEntity<>(appointmentService.getById(id), HttpStatus.OK);
+        return new ResponseEntity<>(service.getById(id), HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ROLE_DOCTOR','ROLE_ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable Long id,
-                                    @RequestBody AppointmentDto appointmentDto) {
-        return new ResponseEntity<>(appointmentService.update(id, appointmentDto), HttpStatus.OK);
+                                    @RequestBody AppointmentDto dto) {
+        return new ResponseEntity<>(service.update(id, dto), HttpStatus.OK);
     }
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
-        return new ResponseEntity<>(appointmentService.delete(id), HttpStatus.OK);
+        return new ResponseEntity<>(service.delete(id), HttpStatus.OK);
     }
 }
-

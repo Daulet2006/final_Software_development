@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class UserController {
-    private final UserService userService;
+    private final UserService service;
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody UserDto dto) {
-        userService.register(dto);
+        service.register(dto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

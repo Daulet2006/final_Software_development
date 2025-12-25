@@ -14,31 +14,31 @@ import org.springframework.web.bind.annotation.*;
 @PreAuthorize("hasAuthority('ROLE_ADMIN')")
 public class DoctorController {
 
-    private final DoctorService doctorService;
+    private final DoctorService service;
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody DoctorDto doctorDto) {
-        return new ResponseEntity<>(doctorService.create(doctorDto), HttpStatus.OK);
+        return new ResponseEntity<>(service.create(doctorDto), HttpStatus.OK);
     }
 
     @GetMapping
     public ResponseEntity<?> getAll() {
-        return new ResponseEntity<>(doctorService.getAll(), HttpStatus.OK);
+        return new ResponseEntity<>(service.getAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable Long id) {
-        return new ResponseEntity<>(doctorService.getById(id), HttpStatus.OK);
+        return new ResponseEntity<>(service.getById(id), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable Long id,
                                     @RequestBody DoctorDto doctorDto) {
-        return new ResponseEntity<>(doctorService.update(id, doctorDto), HttpStatus.OK);
+        return new ResponseEntity<>(service.update(id, doctorDto), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
-        return new ResponseEntity<>(doctorService.delete(id), HttpStatus.OK);
+        return new ResponseEntity<>(service.delete(id), HttpStatus.OK);
     }
 }

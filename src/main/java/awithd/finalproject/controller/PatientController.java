@@ -13,36 +13,37 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class PatientController {
 
-    private final PatientService patientService;
+    private final PatientService service;
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody PatientDto patientDto) {
-        return new ResponseEntity<>(patientService.create(patientDto), HttpStatus.OK);
+    public ResponseEntity<?> create(@RequestBody PatientDto dto) {
+        return new ResponseEntity<>(service.create(dto), HttpStatus.OK);
     }
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping
     public ResponseEntity<?> getAll() {
-        return new ResponseEntity<>(patientService.getAll(), HttpStatus.OK);
+        return new ResponseEntity<>(service.getAll(), HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAnyAuthority('ROLE_USER','ROLE_ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ROLE_PATIENT','ROLE_DOCTOR','ROLE_ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable Long id) {
-        return new ResponseEntity<>(patientService.getById(id), HttpStatus.OK);
+        return new ResponseEntity<>(service.getById(id), HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAnyAuthority('ROLE_USER','ROLE_ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ROLE_PATIENT','ROLE_ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@PathVariable Long id,
-                                    @RequestBody PatientDto patientDto) {
-        return new ResponseEntity<>(patientService.update(id, patientDto), HttpStatus.OK);
+                                    @RequestBody PatientDto dto) {
+        return new ResponseEntity<>(service.update(id, dto), HttpStatus.OK);
     }
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
-        return new ResponseEntity<>(patientService.delete(id), HttpStatus.OK);
+        return new ResponseEntity<>(service.delete(id), HttpStatus.OK);
     }
 }
+
