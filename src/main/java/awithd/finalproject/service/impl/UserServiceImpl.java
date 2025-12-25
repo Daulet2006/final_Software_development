@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void register(UserDto dto) {
+    public User register(UserDto dto) {
 
         if (userRepository.existsByEmail(dto.getEmailDto())) {
             throw new RuntimeException("User already exists");
@@ -58,5 +58,6 @@ public class UserServiceImpl implements UserService {
         user.setPermissions(permissions);
 
         userRepository.save(user);
+        return user;
     }
 }
