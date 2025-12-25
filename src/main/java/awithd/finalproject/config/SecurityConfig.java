@@ -1,11 +1,11 @@
 package awithd.finalproject.config;
 
-import awithd.finalproject.service.UserService;
-import awithd.finalproject.service.impl.UserServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -16,42 +16,37 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
+@RequiredArgsConstructor
 public class SecurityConfig {
-//    @Bean
-//    public UserService userService(){
-//        return new UserService();
-//    }
+
+
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
-        return http.getSharedObject(AuthenticationManagerBuilder.class).build();
+    public AuthenticationManager authenticationManager(
+            AuthenticationConfiguration config
+    ) {
+        return config.getAuthenticationManager();
     }
+
+
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-//        AuthenticationManagerBuilder authenticationManagerBuilder =
-//                http.getSharedObject(AuthenticationManagerBuilder.class);
-
-//        authenticationManagerBuilder
-//                .userDetailsService(UserService())
-//                .passwordEncoder(passwordEncoder());
-
-        http.authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
-                .requestMatchers(
-                        "/api/auth/**",
-                        "/api/docs",
-                        "/api/swagger-ui/**",
-                        "/swagger-ui/**",
-                        "/v3/api-docs/**"
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(
+                                "/api/auth/**",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**"
+                        ).permitAll()
+                        .anyRequest().authenticated()
                 )
-                .permitAll()
-                .anyRequest().authenticated()
-        );
-        http.httpBasic(Customizer.withDefaults());
-//        http.httpBasic(httpBasic -> httpBasic.disable());
-        http.csrf(csrf -> csrf.disable());
+                .httpBasic(Customizer.withDefaults());
+
         return http.build();
     }
 }

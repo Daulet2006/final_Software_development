@@ -25,7 +25,6 @@ public class UserServiceImpl implements UserService {
     private final PermissionRepository permissionRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
-    private final AuthenticationManager authenticationManager;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -59,15 +58,5 @@ public class UserServiceImpl implements UserService {
         user.setPermissions(permissions);
 
         userRepository.save(user);
-    }
-
-    @Override
-    public void login(String email, String password) {
-
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(email, password)
-        );
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 }
