@@ -1,6 +1,7 @@
 package awithd.finalproject.controller;
 
 import awithd.finalproject.dto.UserDto;
+import awithd.finalproject.service.AuthService;
 import awithd.finalproject.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class UserController {
-
+    private final AuthService authService;
     private final UserService userService;
 
     @PostMapping("/register")
@@ -19,10 +20,9 @@ public class UserController {
         userService.register(dto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestParam String email, @RequestParam String password) {
-        userService.login(email, password);
+    public ResponseEntity<Void> login(@RequestParam String email, @RequestParam String password) {
+        authService.login(email, password);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
