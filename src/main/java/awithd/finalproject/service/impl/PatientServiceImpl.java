@@ -22,12 +22,17 @@ public class PatientServiceImpl implements PatientService {
     private final PatientMapper patientMapper;
     private final UserRepository userRepository;
     private final PermissionRepository permissionRepository;
+
     @Override
     @Transactional
     public PatientDto create(PatientDto dto) {
 
         User user = userRepository.findById(dto.getId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (patientRepository.existsById(user.getId())) {
+            throw new RuntimeException("Patient already exists");
+        }
 
         Permission patientRole = permissionRepository
                 .findByName("ROLE_PATIENT")
@@ -36,11 +41,7 @@ public class PatientServiceImpl implements PatientService {
         user.getPermissions().add(patientRole);
 
         Patient patient = new Patient();
-        patient.setId(user.getId());
-        patient.setEmail(user.getEmail());
-        patient.setPassword(user.getPassword());
-        patient.setFirstName(user.getFirstName());
-        patient.setLastName(user.getLastName());
+        patient.setUser(user);
         patient.setMedicalCardNumber(dto.getMedicalCardNumberDto());
 
         return patientMapper.toDto(patientRepository.save(patient));

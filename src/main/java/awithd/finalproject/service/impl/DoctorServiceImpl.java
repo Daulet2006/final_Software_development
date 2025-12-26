@@ -23,25 +23,25 @@ public class DoctorServiceImpl implements DoctorService {
     private final UserRepository userRepository;
     private final PermissionRepository permissionRepository;
 
-    @Transactional
     @Override
+    @Transactional
     public DoctorDto create(DoctorDto dto) {
 
         User user = userRepository.findById(dto.getId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        Permission doctorRole = permissionRepository
-                .findByName("ROLE_DOCTOR")
-                .orElseThrow();
+        if (doctorRepository.existsById(user.getId())) {
+            throw new RuntimeException("Doctor already exists");
+        }
 
-        user.getPermissions().add(doctorRole);
+        Permission role = permissionRepository
+                .findByName("ROLE_DOCTOR")
+                .orElseThrow(() -> new RuntimeException("ROLE_DOCTOR not found"));
+
+        user.getPermissions().add(role);
 
         Doctor doctor = new Doctor();
-        doctor.setId(user.getId());
-        doctor.setEmail(user.getEmail());
-        doctor.setPassword(user.getPassword());
-        doctor.setFirstName(user.getFirstName());
-        doctor.setLastName(user.getLastName());
+        doctor.setUser(user);
         doctor.setSpecialization(dto.getSpecializationDto());
         doctor.setYearsOfExperience(dto.getYearsOfExperienceDto());
 
