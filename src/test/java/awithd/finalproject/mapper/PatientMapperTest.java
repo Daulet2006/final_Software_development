@@ -38,8 +38,8 @@ public class PatientMapperTest {
         User user = new User();
         user.setId(10L);
         user.setEmail("patient@test.com");
-        user.setFirstName("Anna");
-        user.setLastName("Ivanova");
+        user.setFirstName("Patient1");
+        user.setLastName("Patient1");
 
         Patient entity = new Patient();
         entity.setId(10L);
