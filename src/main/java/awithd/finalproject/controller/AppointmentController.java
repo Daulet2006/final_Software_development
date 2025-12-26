@@ -15,7 +15,7 @@ public class AppointmentController {
 
     private final AppointmentService service;
 
-    @PreAuthorize("hasAuthority('ROLE_PATIENT')")
+    @PreAuthorize("hasAnyAuthority('ROLE_PATIENT','ROLE_ADMIN')")
     @PostMapping
     public ResponseEntity<?> create(@RequestBody AppointmentDto dto) {
         return new ResponseEntity<>(service.create(dto), HttpStatus.OK);
