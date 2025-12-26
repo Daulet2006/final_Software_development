@@ -19,4 +19,10 @@ public class UserController {
         service.register(dto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @GetMapping("/me")
+    public ResponseEntity<?> getMe() {
+        return new ResponseEntity<>(service.getMe(),HttpStatus.OK);
+    }
+
 }
