@@ -18,3 +18,24 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/final-sw
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: 12345
+
+  flyway_postgres:
+    image: postgres:16
+    container_name: flyway_postgres
+    environment:
+      POSTGRES_DB: final-sw_test
+      POSTGRES_USER: eternagl
+      POSTGRES_PASSWORD: 12345
+    volumes:
+      - ./db/flyway_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+
+  flyway:
+    image: flyway/flyway:10
+    container_name: flyway
+    command: -url=jdbc:postgresql://flyway_postgres:5432/final-sw_test -user=eternagl -password=12345 -locations=filesystem:/flyway/sql migrate
+    volumes:
+      - ./db/migrations:/flyway/sql
+    depends_on:
+      - flyway_postgres
