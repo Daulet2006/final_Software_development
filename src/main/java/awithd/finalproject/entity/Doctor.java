@@ -15,7 +15,14 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Doctor extends User{
+public class Doctor {
+    @Id
+    private Long id;
+
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "id")
+    private User user;
 
     private String specialization;
     private Integer yearsOfExperience;
