@@ -19,9 +19,6 @@ public class DoctorMapperTest {
     void toEntityTest() {
         DoctorDto dto = DoctorDto.builder()
                 .id(10L)
-                .emailDto("doctor@test.com")
-                .firstNameDto("John")
-                .lastNameDto("Doe")
                 .specializationDto("Cardiologist")
                 .yearsOfExperienceDto(15)
                 .build();
@@ -30,9 +27,10 @@ public class DoctorMapperTest {
 
         Assertions.assertNotNull(entity);
 
-        Assertions.assertEquals(dto.getEmailDto(), entity.getEmail());
-        Assertions.assertEquals(dto.getFirstNameDto(), entity.getFirstName());
-        Assertions.assertEquals(dto.getLastNameDto(), entity.getLastName());
+        Assertions.assertNotNull(dto.getId());
+        Assertions.assertNotNull(dto.getSpecializationDto());
+        Assertions.assertNotNull(dto.getYearsOfExperienceDto());
+
         Assertions.assertEquals(dto.getSpecializationDto(), entity.getSpecialization());
         Assertions.assertEquals(dto.getYearsOfExperienceDto(), entity.getYearsOfExperience());
     }
@@ -41,9 +39,6 @@ public class DoctorMapperTest {
     void toDtoTest() {
         Doctor entity = new Doctor();
         entity.setId(10L);
-        entity.setEmail("doctor@test.com");
-        entity.setFirstName("John");
-        entity.setLastName("Doe");
         entity.setSpecialization("Cardiologist");
         entity.setYearsOfExperience(15);
 
@@ -51,10 +46,11 @@ public class DoctorMapperTest {
 
         Assertions.assertNotNull(dto);
 
+        Assertions.assertNotNull(entity.getId());
+        Assertions.assertNotNull(entity.getSpecialization());
+        Assertions.assertNotNull(entity.getYearsOfExperience());
+
         Assertions.assertEquals(entity.getId(), dto.getId());
-        Assertions.assertEquals(entity.getEmail(), dto.getEmailDto());
-        Assertions.assertEquals(entity.getFirstName(), dto.getFirstNameDto());
-        Assertions.assertEquals(entity.getLastName(), dto.getLastNameDto());
         Assertions.assertEquals(entity.getSpecialization(), dto.getSpecializationDto());
         Assertions.assertEquals(entity.getYearsOfExperience(), dto.getYearsOfExperienceDto());
     }
@@ -63,25 +59,16 @@ public class DoctorMapperTest {
     void toDtoListTest() {
         Doctor d1 = new Doctor();
         d1.setId(1L);
-        d1.setEmail("d1@test.com");
-        d1.setFirstName("Alice");
-        d1.setLastName("Brown");
         d1.setSpecialization("Therapist");
         d1.setYearsOfExperience(5);
 
         Doctor d2 = new Doctor();
         d2.setId(2L);
-        d2.setEmail("d2@test.com");
-        d2.setFirstName("Bob");
-        d2.setLastName("Smith");
         d2.setSpecialization("Surgeon");
         d2.setYearsOfExperience(12);
 
         Doctor d3 = new Doctor();
         d3.setId(3L);
-        d3.setEmail("d3@test.com");
-        d3.setFirstName("Clara");
-        d3.setLastName("Johnson");
         d3.setSpecialization("Pediatrician");
         d3.setYearsOfExperience(8);
 
@@ -99,9 +86,6 @@ public class DoctorMapperTest {
             Assertions.assertNotNull(dto);
 
             Assertions.assertEquals(entity.getId(), dto.getId());
-            Assertions.assertEquals(entity.getEmail(), dto.getEmailDto());
-            Assertions.assertEquals(entity.getFirstName(), dto.getFirstNameDto());
-            Assertions.assertEquals(entity.getLastName(), dto.getLastNameDto());
             Assertions.assertEquals(entity.getSpecialization(), dto.getSpecializationDto());
             Assertions.assertEquals(entity.getYearsOfExperience(), dto.getYearsOfExperienceDto());
         }
