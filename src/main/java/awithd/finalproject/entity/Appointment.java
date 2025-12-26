@@ -20,15 +20,15 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "doctor_id", nullable = false)
     private Doctor doctor;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "patient_id", nullable = false)
     private Patient patient;
 
-    private LocalDateTime appointmentTime;
+    private LocalDateTime appointmentTime = LocalDateTime.now();
 
     @Enumerated(EnumType.STRING)
     private AppointmentStatus status;

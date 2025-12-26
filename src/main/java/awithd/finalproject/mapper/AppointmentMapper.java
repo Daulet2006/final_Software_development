@@ -17,8 +17,8 @@ public interface AppointmentMapper {
     @Mapping(target = "reason", source = "reasonDto")
     Appointment toEntity(AppointmentDto dto);
 
-    @Mapping(target = "doctorId", ignore = true)
-    @Mapping(target = "patientId", ignore = true)
+    @Mapping(target = "doctorId", source = "doctor.id")
+    @Mapping(target = "patientId", source = "patient.id")
     @Mapping(target = "appointmentTimeDto", source = "appointmentTime")
     @Mapping(target = "statusDto", source = "status")
     @Mapping(target = "reasonDto", source = "reason")
