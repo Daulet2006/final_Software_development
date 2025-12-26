@@ -15,6 +15,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Random;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -31,8 +32,6 @@ public class AppointmentServiceTest {
 
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private AppointmentRepository appointmentRepository;
 
     @Test
     void getAllAppointmentsTest() {
@@ -109,9 +108,11 @@ public class AppointmentServiceTest {
     }
 
     private AppointmentDto createTestAppointment() {
+        Random random = new Random();
+        int randomNum = random.nextInt(10);
 
         User doctorUser = new User();
-        doctorUser.setEmail("doctorAppointment@gmail.com");
+        doctorUser.setEmail("doctor" + randomNum + "@gmail.com");
         doctorUser.setPassword("$2a$12$QvDiehO1CgbXuMnh.DOv/.ij/O5Q5Cz1wSw/u7xc2lsSH7dJWhMLy");
         doctorUser.setFirstName("Doc");
         doctorUser.setLastName("Tor");
@@ -126,7 +127,7 @@ public class AppointmentServiceTest {
         DoctorDto doctor = doctorService.create(doctorDto);
 
         User patientUser = new User();
-        patientUser.setEmail("patientAppointment@mail.com");
+        patientUser.setEmail("patient" + randomNum + "@mail.com");
         patientUser.setPassword("$2a$12$QvDiehO1CgbXuMnh.DOv/.ij/O5Q5Cz1wSw/u7xc2lsSH7dJWhMLy");
         patientUser.setFirstName("Pat");
         patientUser.setLastName("Ient");
