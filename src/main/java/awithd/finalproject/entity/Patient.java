@@ -1,9 +1,6 @@
 package awithd.finalproject.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +15,14 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Patient extends User {
+public class Patient {
+    @Id
+    private Long id;
+
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "id")
+    private User user;
 
     private String medicalCardNumber;
 

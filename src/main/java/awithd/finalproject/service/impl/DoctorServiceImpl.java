@@ -2,9 +2,14 @@ package awithd.finalproject.service.impl;
 
 import awithd.finalproject.dto.DoctorDto;
 import awithd.finalproject.entity.Doctor;
+import awithd.finalproject.entity.Permission;
+import awithd.finalproject.entity.User;
 import awithd.finalproject.mapper.DoctorMapper;
 import awithd.finalproject.repository.DoctorRepository;
+import awithd.finalproject.repository.PermissionRepository;
+import awithd.finalproject.repository.UserRepository;
 import awithd.finalproject.service.DoctorService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,15 +20,40 @@ import java.util.List;
 public class DoctorServiceImpl implements DoctorService {
     private final DoctorRepository doctorRepository;
     private final DoctorMapper doctorMapper;
+    private final UserRepository userRepository;
+    private final PermissionRepository permissionRepository;
 
     @Override
-    public DoctorDto create(DoctorDto doctorDto) {
-        return doctorMapper.toDto(doctorRepository.save(doctorMapper.toEntity(doctorDto)));
+    @Transactional
+    public DoctorDto create(DoctorDto dto) {
+
+        User user = userRepository.findById(dto.getId())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (doctorRepository.existsById(user.getId())) {
+            throw new RuntimeException("Doctor already exists");
+        }
+
+        Permission role = permissionRepository
+                .findByName("ROLE_DOCTOR")
+                .orElseThrow(() -> new RuntimeException("ROLE_DOCTOR not found"));
+
+        user.getPermissions().add(role);
+
+        Doctor doctor = new Doctor();
+        doctor.setUser(user);
+        doctor.setSpecialization(dto.getSpecializationDto());
+        doctor.setYearsOfExperience(dto.getYearsOfExperienceDto());
+
+        return doctorMapper.toDto(doctorRepository.save(doctor));
     }
 
     @Override
     public DoctorDto getById(Long id) {
-        return doctorMapper.toDto(doctorRepository.findById(id).orElse(null));
+        return doctorMapper.toDto(
+                doctorRepository.findById(id)
+                        .orElseThrow(() -> new RuntimeException("Doctor not found"))
+        );
     }
 
     @Override
@@ -32,26 +62,21 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public DoctorDto update(Long id, DoctorDto doctorDto) {
-        Doctor newEntity = doctorMapper.toEntity(doctorDto);
-        Doctor oldEntity = doctorRepository.findById(id).orElseThrow();
+    @Transactional
+    public DoctorDto update(Long id, DoctorDto dto) {
+        Doctor doctor = doctorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Doctor not found"));
 
-        oldEntity.setEmail(newEntity.getEmail());
-        oldEntity.setFirstName(newEntity.getFirstName());
-        oldEntity.setLastName(newEntity.getLastName());
-        oldEntity.setSpecialization(newEntity.getSpecialization());
-        oldEntity.setYearsOfExperience(newEntity.getYearsOfExperience());
+        doctor.setSpecialization(dto.getSpecializationDto());
+        doctor.setYearsOfExperience(dto.getYearsOfExperienceDto());
 
-        return doctorMapper.toDto(doctorRepository.save(oldEntity));
+        return doctorMapper.toDto(doctorRepository.save(doctor));
     }
 
     @Override
     public boolean delete(Long id) {
-        if (doctorRepository.existsById(id)) {
-            doctorRepository.deleteById(id);
-            return true;
-        } else {
-            return false;
-        }
+        if (!doctorRepository.existsById(id)) return false;
+        doctorRepository.deleteById(id);
+        return true;
     }
 }
