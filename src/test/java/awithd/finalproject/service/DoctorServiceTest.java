@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
+import java.util.UUID;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -20,6 +21,7 @@ public class DoctorServiceTest {
 
     @Autowired
     private UserRepository userRepository;
+    private String email = "test" + UUID.randomUUID().toString().substring(0, 8) + "@test.com";
 
     @Test
     void getAllDoctorsTest() {
@@ -43,7 +45,8 @@ public class DoctorServiceTest {
     @Test
     void getDoctorByIdTest() {
         User user = new User();
-        user.setEmail("doctor12@mail.com");
+
+        user.setEmail(email);
         user.setPassword("$2a$12$QvDiehO1CgbXuMnh.DOv/.ij/O5Q5Cz1wSw/u7xc2lsSH7dJWhMLy");
         user.setFirstName("Test");
         user.setLastName("Doctor");
@@ -71,7 +74,7 @@ public class DoctorServiceTest {
     @Test
     void createDoctorTest() {
         User user = new User();
-        user.setEmail("doctor123@mail.com");
+        user.setEmail(email);
         user.setPassword("$2a$12$QvDiehO1CgbXuMnh.DOv/.ij/O5Q5Cz1wSw/u7xc2lsSH7dJWhMLy");
         user.setFirstName("Test");
         user.setLastName("Doctor");
@@ -98,7 +101,7 @@ public class DoctorServiceTest {
     @Test
     void updateDoctorTest() {
         User user = new User();
-        user.setEmail("doctor1234@mail.com");
+        user.setEmail(email);
         user.setPassword("$2a$12$QvDiehO1CgbXuMnh.DOv/.ij/O5Q5Cz1wSw/u7xc2lsSH7dJWhMLy");
         user.setFirstName("Test");
         user.setLastName("Doctor");
@@ -134,7 +137,7 @@ public class DoctorServiceTest {
     @Test
     void deleteDoctorTest() {
         User user = new User();
-        user.setEmail("doctor12345@mail.com");
+        user.setEmail(email);
         user.setPassword("$2a$12$QvDiehO1CgbXuMnh.DOv/.ij/O5Q5Cz1wSw/u7xc2lsSH7dJWhMLy");
         user.setFirstName("Test");
         user.setLastName("Doctor");

@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
+import java.util.UUID;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -20,6 +21,7 @@ public class PatientServiceTest {
 
     @Autowired
     private UserRepository userRepository;
+    private String email = "test" + UUID.randomUUID().toString().substring(0, 8) + "@test.com";
 
     @Test
     void getAllPatientsTest() {
@@ -42,7 +44,7 @@ public class PatientServiceTest {
     @Test
     void getPatientByIdTest() {
         User user = new User();
-        user.setEmail("patientone@gmail.com");
+        user.setEmail(email);
         user.setPassword("$2a$12$QvDiehO1CgbXuMnh.DOv/.ij/O5Q5Cz1wSw/u7xc2lsSH7dJWhMLy");
         user.setFirstName("Test");
         user.setLastName("Patient");
@@ -68,7 +70,7 @@ public class PatientServiceTest {
     @Test
     void createPatientTest() {
         User user = new User();
-        user.setEmail("patienttwo@gmail.com");
+        user.setEmail(email);
         user.setPassword("$2a$12$QvDiehO1CgbXuMnh.DOv/.ij/O5Q5Cz1wSw/u7xc2lsSH7dJWhMLy");
         user.setFirstName("Test");
         user.setLastName("Patient");
@@ -87,13 +89,13 @@ public class PatientServiceTest {
         Assertions.assertEquals(user.getEmail(), createdPatient.getEmailDto());
         Assertions.assertEquals(user.getFirstName(), createdPatient.getFirstNameDto());
         Assertions.assertEquals(user.getLastName(), createdPatient.getLastNameDto());
-        Assertions.assertEquals("222", createdPatient.getMedicalCardNumberDto());
+        Assertions.assertEquals(patientDto.getMedicalCardNumberDto(), createdPatient.getMedicalCardNumberDto());
     }
 
     @Test
     void updatePatientTest() {
         User user = new User();
-        user.setEmail("patientthree@gmail.com");
+        user.setEmail(email);
         user.setPassword("$2a$12$QvDiehO1CgbXuMnh.DOv/.ij/O5Q5Cz1wSw/u7xc2lsSH7dJWhMLy");
         user.setFirstName("Test");
         user.setLastName("Patient");
@@ -113,7 +115,7 @@ public class PatientServiceTest {
                 patientService.update(createdPatient.getId(), updateDto);
 
         Assertions.assertNotNull(updatedPatient);
-        Assertions.assertEquals("444", updatedPatient.getMedicalCardNumberDto());
+        Assertions.assertEquals(updateDto.getMedicalCardNumberDto(), updatedPatient.getMedicalCardNumberDto());
 
         PatientDto checkPatient =
                 patientService.getById(createdPatient.getId());
@@ -127,7 +129,7 @@ public class PatientServiceTest {
     @Test
     void deletePatientTest() {
         User user = new User();
-        user.setEmail("patientfour@gmail.com");
+        user.setEmail(email);
         user.setPassword("$2a$12$QvDiehO1CgbXuMnh.DOv/.ij/O5Q5Cz1wSw/u7xc2lsSH7dJWhMLy");
         user.setFirstName("Test");
         user.setLastName("Patient");
