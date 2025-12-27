@@ -36,12 +36,14 @@ public class SecurityConfig {
     public SecurityFilterChain publicChain(HttpSecurity http) throws Exception {
         http
                 .securityMatcher(
-                        "/api/auth/**",
+                        "/api/auth/register",
+                        "/api/swagger-config",
                         "/swagger-ui/**",
                         "/swagger-ui.html",
                         "/v3/api-docs/**",
                         "/swagger-resources/**",
-                        "/webjars/**"
+                        "/webjars/**",
+                        "/api/swagger-ui/index.html"
                 )
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
