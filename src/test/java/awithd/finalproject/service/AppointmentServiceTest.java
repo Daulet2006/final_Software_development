@@ -33,6 +33,7 @@ public class AppointmentServiceTest {
     @Autowired
     private UserRepository userRepository;
 
+    private final Random random = new Random();
     @Test
     void getAllAppointmentsTest() {
         List<AppointmentDto> appointmentDtoList = appointmentService.getAll();
@@ -89,7 +90,7 @@ public class AppointmentServiceTest {
         AppointmentDto updated = appointmentService.update(created.getId(), updateDto);
 
         Assertions.assertNotNull(updated);
-        Assertions.assertEquals("Updated reason", updated.getReasonDto());
+        Assertions.assertEquals(updateDto.getReasonDto(), updated.getReasonDto());
         Assertions.assertEquals(AppointmentStatus.COMPLETED, updated.getStatusDto());
 
         AppointmentDto check = appointmentService.getById(created.getId());
@@ -107,12 +108,12 @@ public class AppointmentServiceTest {
         Assertions.assertTrue(deleted);
     }
 
+
     private AppointmentDto createTestAppointment() {
-        Random random = new Random();
-        int randomNum = random.nextInt(10);
+        long uniquePart = System.currentTimeMillis() + random.nextLong(1000000);
 
         User doctorUser = new User();
-        doctorUser.setEmail("doctor" + randomNum + "@gmail.com");
+        doctorUser.setEmail("doctor" + uniquePart + "@gmail.com");
         doctorUser.setPassword("$2a$12$QvDiehO1CgbXuMnh.DOv/.ij/O5Q5Cz1wSw/u7xc2lsSH7dJWhMLy");
         doctorUser.setFirstName("Doc");
         doctorUser.setLastName("Tor");
@@ -127,7 +128,7 @@ public class AppointmentServiceTest {
         DoctorDto doctor = doctorService.create(doctorDto);
 
         User patientUser = new User();
-        patientUser.setEmail("patient" + randomNum + "@mail.com");
+        patientUser.setEmail("patient" + uniquePart + "@mail.com");
         patientUser.setPassword("$2a$12$QvDiehO1CgbXuMnh.DOv/.ij/O5Q5Cz1wSw/u7xc2lsSH7dJWhMLy");
         patientUser.setFirstName("Pat");
         patientUser.setLastName("Ient");

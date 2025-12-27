@@ -42,11 +42,14 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webmvc</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.5.4</version>
             <scope>runtime</scope>
         </dependency>
         <!-- Flyway -->
@@ -55,7 +58,6 @@
             <artifactId>flyway-core</artifactId>
         </dependency>
 
-        <!-- Flyway поддержка PostgreSQL -->
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-database-postgresql</artifactId>
@@ -66,7 +68,6 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.mapstruct/mapstruct -->
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
@@ -124,27 +125,15 @@
             <plugin>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
-                <version>11.7.2</version>
                 <configuration>
                     <url>jdbc:postgresql://localhost:5432/final-sw_test</url>
-                    <user>eternagl</user>
+                    <user>postgres</user>
+<!--                    <user>eternagl</user>-->
                     <password>12345</password>
                     <schemas>
                         <schema>public</schema>
                     </schemas>
                 </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.flywaydb</groupId>
-                        <artifactId>flyway-database-postgresql</artifactId>
-                        <version>11.7.2</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.postgresql</groupId>
-                        <artifactId>postgresql</artifactId>
-                        <version>42.5.4</version>
-                    </dependency>
-                </dependencies>
             </plugin>
         </plugins>
     </build>

@@ -1,7 +1,9 @@
 INSERT INTO permissions (name) VALUES
                                   ('ROLE_ADMIN'),
                                   ('ROLE_DOCTOR'),
+                                  ('ROLE_USER'),
                                   ('ROLE_PATIENT');
+
 
 INSERT INTO users (email, password, first_name, last_name) VALUES
                                                                ('doctor1@mail.com', '$2a$12$WuSgMbSvKlhPbU/Y886f5ufiMVqJgYQzcy3C8Hb2mJkBRPHPzjUgS', 'doctor1', 'doctor1'),
